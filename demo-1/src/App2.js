@@ -1,43 +1,42 @@
 import React from 'react'
 
-const App = (props) => {
-    const {userInfo} = props;
-    console.log('App', userInfo)
+const App2 = (props) => {
+    const {name: {value, onChange}} = props;
     return (
         <div className="App">
             <h1>Learn React</h1>
-            <p>
-                {JSON.stringify(userInfo, null, 2)}
-            </p>
+            <input type="text" value={value} onChange={(e) => onChange(e.target.value)}/>
         </div>
     );
 }
 
 /**
- * 在高阶组件里操作props
+ * 在高阶组件里抽离 state
  * @param WrappedComponent
  * @constructor
  */
-const HigherOrderComponent = (WrappedComponent) => {
+const withOnChange = (WrappedComponent) => {
     return class extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
-                userInfo: null
+                name: ''
             }
         }
 
-        componentDidMount() {
-            fetch('https://jsonplaceholder.typicode.com/users/1')
-                .then(response => response.json())
-                .then(data => this.setState({userInfo: data}))
+        onChange = (newName) => {
+            console.log('onChange', newName)
+            this.setState({name: newName})
         }
 
+
         render() {
-            const {userInfo} = this.state;
+            const {name} = this.state;
             const newProps = {
-                ...this.props,
-                userInfo
+                name: {
+                    value: name,
+                    onChange: this.onChange
+                }
             }
             return (
                 <WrappedComponent {...newProps} />
@@ -47,4 +46,4 @@ const HigherOrderComponent = (WrappedComponent) => {
 }
 
 
-export default HigherOrderComponent(App);
+export default withOnChange(App2);
