@@ -1,5 +1,5 @@
 {
-  "name": "demo-2",
+  "name": "demo-3",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,7 +15,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "mock": "json-server -p 9090 mock.json"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "json-server": "^0.16.3"
   }
 }
